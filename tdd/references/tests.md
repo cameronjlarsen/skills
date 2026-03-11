@@ -122,3 +122,12 @@ public async Task CreateUser_makes_user_retrievable()
     Assert.That(retrieved.Name, Is.EqualTo("Alice"));
 }
 ```
+
+## Storage Verification Nuance
+
+Verifying through a database query is usually a weaker test than verifying through a public application interface, because it couples the test to storage details.
+
+Prefer:
+
+- asserting through a public read API when the contract is "this data can now be retrieved"
+- asserting through storage only when persistence behavior itself is part of the contract being tested

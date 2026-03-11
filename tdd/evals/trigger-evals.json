@@ -1,0 +1,66 @@
+[
+  {
+    "query": "I found a bug in `src/billing/calculateInvoiceTotal.ts` where totals are off by one cent when a discount and tax both apply. Please reproduce it with a failing test first, then make the smallest code change to pass.",
+    "should_trigger": true
+  },
+  {
+    "query": "Can you use red-green-refactor to add support for expired invite links in our auth flow? Start with the smallest user-visible behavior.",
+    "should_trigger": true
+  },
+  {
+    "query": "Before we touch this gnarly legacy parser in `lib/import/legacy_csv.rb`, I want characterization tests around its current behavior so we can refactor safely.",
+    "should_trigger": true
+  },
+  {
+    "query": "I'm trying to do this discount engine feature test-first instead of sketching the whole solution up front. What test should I write next if I only want the smallest useful behavior?",
+    "should_trigger": true
+  },
+  {
+    "query": "Please add a regression test for the null crash in `OrderSummary.fromApiResponse()` before fixing it. I don't want a broad rewrite, just the smallest safe change.",
+    "should_trigger": true
+  },
+  {
+    "query": "We need to refactor `PricingService` but I'm nervous about breaking behavior. Can you protect it with tests first, then clean it up in small green steps?",
+    "should_trigger": true
+  },
+  {
+    "query": "ok can we do this TDD style? feature is: prevent users from reusing their last 5 passwords. don't dump all the tests first, go one slice at a time.",
+    "should_trigger": true
+  },
+  {
+    "query": "I want to add support for retrying failed webhook deliveries, but please drive it with tests first and keep each step tiny.",
+    "should_trigger": true
+  },
+  {
+    "query": "Write a full integration test suite for our payments service. Cover the happy path and a few failures.",
+    "should_trigger": false
+  },
+  {
+    "query": "Can you increase coverage on `src/utils/dateRange.ts`? The PR comment says we're below threshold.",
+    "should_trigger": false
+  },
+  {
+    "query": "Please refactor `UserMapper` for readability. There are no behavior changes needed, I just want the code cleaner.",
+    "should_trigger": false
+  },
+  {
+    "query": "Explain what red-green-refactor means and when teams usually use it. No code changes, just teach me.",
+    "should_trigger": false
+  },
+  {
+    "query": "Convert these Jest tests to NUnit and preserve the existing assertions. This is a framework migration, not a rewrite.",
+    "should_trigger": false
+  },
+  {
+    "query": "Why is this flaky Playwright test timing out in CI but passing locally? Help me debug it.",
+    "should_trigger": false
+  },
+  {
+    "query": "Generate mocks for our `InventoryApiClient` so I can unit test `StockSyncService` in isolation.",
+    "should_trigger": false
+  },
+  {
+    "query": "Review these tests and tell me whether they're too coupled to implementation details.",
+    "should_trigger": false
+  }
+]
