@@ -31,6 +31,22 @@ Do not use this skill for:
 
 - **Full mode (default):** Explore broadly, propose multiple candidates, design 3+ interfaces in parallel.
 - **Quick mode (on user signal):** If user says "quick", "fast", "just one", or similar, return one top candidate and two interface options.
+- **Targeted mode (on user scope):** If user names a path, module, subsystem, bounded context, or concept area, constrain exploration to that area and direct collaborators first.
+
+## Scope Input (optional)
+
+Users can scope this skill by naming:
+
+- A file path or directory
+- A module/class/service name
+- A subsystem or bounded context
+- A concept area (for example: "auth/session", "billing/invoicing")
+
+Examples:
+
+- "Focus on src/payments"
+- "Analyze OrderService"
+- "Review architecture around auth/session handling"
 
 ## Lens Modes (optional)
 
@@ -62,7 +78,18 @@ Trigger rules for `lenses=auto`:
 
 Use the `Task` tool with `subagent_type=explore` to navigate the codebase naturally. Do not follow rigid heuristics; explore organically and note where you experience friction.
 
+If the user supplied a scope, explore that area first and expand outward only far enough to understand:
+
+- Immediate callers
+- Direct dependencies
+- 2-3 meaningful call chains through the area
+- Nearby tests (or meaningful test absence)
+
+In Targeted mode, do not spend effort ranking unrelated repo-wide candidates unless the scoped area is too small to evaluate.
+
 Minimum coverage floor for repeatable quality:
+
+In Targeted mode, apply this floor within the scoped area and immediate collaborators rather than across the whole repo.
 
 - Trace at least 3 meaningful call chains end-to-end
 - Inspect at least 2 test areas (or confirm meaningful test absence)
@@ -80,6 +107,10 @@ The friction you encounter IS the signal.
 
 ### 2. Present candidates
 
+In Full mode without user scope, present multiple candidates across the codebase.
+
+In Targeted mode, present 2-4 candidates within the scoped area when multiple plausible deepening opportunities exist. If only one strong candidate exists, do not force a menu; proceed directly to Step 4.
+
 Present a numbered list of deepening opportunities. For each candidate, show:
 
 - **Cluster**: Which modules/concepts are involved
@@ -90,7 +121,10 @@ Present a numbered list of deepening opportunities. For each candidate, show:
 - **Confidence (low|medium|high)**: How strong the evidence is
 - **Migration cost (S|M|L)**: Estimated effort/risk to migrate callers
 
-Do NOT propose interfaces yet. Ask the user: "Which of these would you like to explore?"
+Do NOT propose interfaces yet.
+
+- If multiple credible candidates remain, ask: "Which of these would you like to explore?"
+- If one candidate is clearly dominant in the requested area, state that judgment and continue to Step 4.
 
 ### Local RFC store
 
@@ -183,6 +217,7 @@ Avoid these failure modes:
 - Path-coupled guidance: recommendations that break when files move
 - Premature interface proposals before proving coupling/problem shape
 - Non-discriminating options: presenting many designs that differ only superficially
+- Ignoring explicit user scope: drifting into repo-wide exploration when the user already named the target area
 
 ## Output Templates
 
@@ -193,6 +228,21 @@ Use these templates to keep output predictable and easy to review.
 ```markdown
 1. <short title>
    - Cluster: <modules/concepts>
+   - Why coupled: <shared types/calls/ownership>
+   - Dependency category: <in-process|local-substitutable|ports-adapters|mock>
+   - Test impact: <what boundary tests replace>
+   - Severity: <1-5>
+   - Confidence: <low|medium|high>
+   - Migration cost: <S|M|L>
+```
+
+### Targeted Candidate List
+
+```markdown
+Scoped area: <path|module|concept>
+
+1. <short title>
+   - Cluster: <modules/concepts in scoped area>
    - Why coupled: <shared types/calls/ownership>
    - Dependency category: <in-process|local-substitutable|ports-adapters|mock>
    - Test impact: <what boundary tests replace>
