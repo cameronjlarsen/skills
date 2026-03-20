@@ -22,6 +22,39 @@ Recommendation shape: "Define a shared interface (port), implement an HTTP adapt
 
 Third-party services (Stripe, Twilio, etc.) you don't control. Mock at the boundary. The deepened module takes the external dependency as an injected port, and tests provide a mock implementation.
 
+## Cross-Skill Lens Matrix
+
+Use these lenses only per lens mode and trigger rules in [SKILL.md](SKILL.md).
+
+| Lens | Trigger | Checks (2-4) | Red flags | How it changes recommendation |
+|------|---------|--------------|-----------|-------------------------------|
+| `software-design-philosophy` | Always in `minimal`; default baseline in `auto/full` | Module depth ratio, interface complexity, information hiding, change amplification | Thin pass-through layers, many knobs on API, leaked implementation details | Prefer smaller surface + deeper module; merge shallow seams |
+| `domain-driven-design` | Domain terms, bounded-context seams, aggregates, ACL needs | Ubiquitous language fit, context boundary clarity, aggregate consistency boundary, anti-corruption layer need | Generic technical names, context leakage, giant aggregates, foreign model leakage | Rebound module along domain boundary; add ACL ports at context edges |
+| `ddia-systems` | Storage/consistency/replication/partition/transaction/pipeline impact | Consistency model fit, transaction boundary correctness, replication lag tolerance, partition hotspot risk | Hidden cross-partition writes, unstated consistency assumptions, unbounded fanout, fragile retries | Adjust API around consistency guarantees; isolate data-critical paths |
+| `system-design` | Scale/latency/throughput/availability/SLO/ops concerns | Capacity assumptions, failure modes, bottleneck placement, migration/runtime risk | No load assumptions, single points of failure, sync chains on slow deps, no rollback path | Favor safer migration path, explicit SLO trade-offs, staged rollout plan |
+| `clean-code` | User explicitly asks | Naming clarity, function responsibility, error boundary clarity | Ambiguous names, mixed abstraction levels, side-effect-heavy helpers | Tighten interface naming and caller ergonomics |
+| `refactoring-patterns` | User explicitly asks | Smell-to-refactor mapping, sequence safety, branch-by-abstraction need | Big-bang rewrite plan, unclear sequence, no characterization tests | Recommend incremental migration sequence with named refactor steps |
+
+### Guardrails (when not to apply)
+
+- Skip `ddia-systems` for purely in-process candidates with no data boundary risk.
+- Skip `system-design` when there are no explicit runtime or scale concerns.
+- Skip `domain-driven-design` when candidate is purely technical plumbing with no domain model boundary.
+- Skip `clean-code` and `refactoring-patterns` unless user asks.
+
+### Quick Mode Fast Path
+
+- In Quick mode, apply at most one conditional lens unless `lenses=full` is set.
+- Choose the single highest-signal conditional lens by observed risk.
+- If `lenses=none`, apply zero lenses regardless of risk.
+
+### `lenses=none` semantics
+
+When lens mode is `none`, output:
+
+- `Applied lenses: []`
+- `Skipped lenses: [software-design-philosophy, domain-driven-design, ddia-systems, system-design, clean-code, refactoring-patterns] (mode=lenses=none)`
+
 ## Testing Strategy
 
 The core principle: **replace, don't layer.**

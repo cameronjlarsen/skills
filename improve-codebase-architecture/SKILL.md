@@ -32,6 +32,30 @@ Do not use this skill for:
 - **Full mode (default):** Explore broadly, propose multiple candidates, design 3+ interfaces in parallel.
 - **Quick mode (on user signal):** If user says "quick", "fast", "just one", or similar, return one top candidate and two interface options.
 
+## Lens Modes (optional)
+
+Cross-skill checks are optional and mode-driven.
+
+- **`lenses=auto` (default):** Run only triggered lenses.
+- **`lenses=minimal`:** Run only `software-design-philosophy` core checks.
+- **`lenses=full`:** Run all lenses.
+- **`lenses=none`:** Run zero cross-skill lenses.
+
+Mode override rule: mode beats tier. If `lenses=none`, run no lenses even if a lens would otherwise be required.
+
+Lens tiers:
+
+- **Core lens:** `software-design-philosophy` (deep module depth, information hiding, interface complexity)
+- **Conditional lenses:** `domain-driven-design`, `ddia-systems`, `system-design`
+- **On-demand lenses:** `clean-code`, `refactoring-patterns` (only when user asks for these checks)
+
+Trigger rules for `lenses=auto`:
+
+- Run `domain-driven-design` when candidate boundaries align to domain terms, bounded contexts, aggregates, or anti-corruption seams.
+- Run `ddia-systems` when candidate crosses consistency, replication, partitioning, transaction, or data pipeline boundaries.
+- Run `system-design` when candidate has explicit scale, latency, throughput, availability, SLO, or operational concerns.
+- Do not run `clean-code` or `refactoring-patterns` unless user explicitly requests them.
+
 ## Process
 
 ### 1. Explore the codebase
@@ -91,6 +115,27 @@ Before spawning sub-agents, write a user-facing explanation of the problem space
 - A rough illustrative code sketch to make the constraints concrete — this is not a proposal, just a way to ground the constraints
 
 Show this to the user, then immediately proceed to Step 5. The user reads and thinks about the problem while the sub-agents work in parallel.
+
+### 4.5 Run cross-skill lenses (optional)
+
+Apply lenses according to lens mode and trigger rules.
+
+- `lenses=none`: skip all lenses.
+- `lenses=minimal`: apply only `software-design-philosophy`.
+- `lenses=auto`: apply `software-design-philosophy` plus triggered conditional lenses.
+- `lenses=full`: apply all lenses.
+
+In Quick mode, apply at most one conditional lens unless `lenses=full` is explicitly set.
+
+For transparency, always include:
+
+- `Applied lenses: [<lens names>]`
+- `Skipped lenses: [<lens names>] (<reason>)`
+
+For `lenses=none`, output exactly:
+
+- `Applied lenses: []`
+- `Skipped lenses: [software-design-philosophy, domain-driven-design, ddia-systems, system-design, clean-code, refactoring-patterns] (mode=lenses=none)`
 
 ### 5. Design multiple interfaces
 
