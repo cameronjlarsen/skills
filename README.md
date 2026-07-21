@@ -13,7 +13,9 @@ Install the **pstack** plugin first. This plugin depends on pstack for `principl
 
 ## Local install
 
-Point Cursor at this directory as a local plugin (Settings → Plugins → add local plugin path), or symlink/copy into your plugins folder. Reload Cursor after install.
+1. Symlink/junction this repo under `~/.cursor/plugins/local/cameron-mode`, **or**
+2. Use Cursor’s “add from folder” UI (requires `.cursor-plugin/marketplace.json` in this repo).
+3. Reload Window (`Developer: Reload Window`).
 
 ## What ships
 

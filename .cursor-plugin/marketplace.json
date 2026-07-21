@@ -1,0 +1,17 @@
+{
+  "name": "cameron-mode",
+  "owner": {
+    "name": "Cameron Larsen"
+  },
+  "metadata": {
+    "description": "Cameron's agent style: concise verified work, planner-worker orchestration, ADO/WI shipping, and tighter approval gates."
+  },
+  "plugins": [
+    {
+      "name": "cameron-mode",
+      "source": "./",
+      "version": "0.1.0",
+      "description": "Cameron's agent style: concise verified work, planner-worker orchestration, ADO/WI shipping, and tighter approval gates. Requires the pstack plugin for principle-* and workflow leaf skills."
+    }
+  ]
+}
