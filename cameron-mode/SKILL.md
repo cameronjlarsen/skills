@@ -1,10 +1,11 @@
 ---
 name: cameron-mode
 description: >-
-  Cameron's agent style: poteto-mode philosophy with mechanical overlays for
-  ADO/WI shipping, tighter approval gates, Plannotator plan review, propose-
-  before-code on findings, and legacy surfaces without automated tests. Use for
-  Cameron, /cameron-mode, or requests to work in Cameron's style.
+  Cameron's agent style: poteto-mode philosophy with a planner-worker parent,
+  Composer minions for nontrivial edits, ADO/WI shipping, tighter approval
+  gates, propose-before-code on findings, and legacy surfaces without
+  automated tests. Use for Cameron, /cameron-mode, or requests to work in
+  Cameron's style.
 disable-model-invocation: true
 mode: true
 reminder: New task? Playbook match or rigor needed -> apply /cameron-mode. Casual turn or human opts out -> don't.
@@ -41,10 +42,28 @@ Poteto still pauses for deploys, data deletion, and customer messages. Those sta
 
 ### Plans and design locks
 
-- Prefer **Plannotator** (or the human's interactive plan review) over dumping long markdown plans in chat.
+- Prefer interactive review over dumping long markdown plans in chat. Put the body in a plan file or short chat summary.
+- **Plannotator is on-demand.** Do not auto-launch `plannotator` or `--gate`. Use it when the human asks, attaches a plannotator skill, or accepts an offer.
+- For long plans or spike docs, offer Plannotator once. If they decline or ignore, stay on chat / `plan.md`.
 - After the human approves a plan for implementation: execute it as specified, do **not** edit the plan file, finish every todo.
 - Product/preference forks that need locking: `grill-me` (one question at a time) is an acceptable path alongside poteto's classify-before-AskQuestion rule.
 - Prefer matching existing codebase patterns and named prior work items over inventing a new shape, unless redesign was requested.
+
+### Planner and workers
+
+The parent is the **planner / orchestrator**. Subagents are the **workers**.
+
+For nontrivial work (multi-file, unclear shape, or anything that would fill the parent context with file dumps):
+
+1. Frame the goal, assumptions, and slices in the parent.
+2. Fan research, implementation, and heavy verify to Composer `Task` workers.
+3. Synthesize in the parent. Own the summary. Do not pass through worker prose unchanged.
+
+**Parent does not implement nontrivial code.** Edits that change behavior across more than a trivial touch go to a Composer 2.5 minion. The parent reviews the diff and writes the reply.
+
+Small single-file or mechanical fixes may stay in the parent when they would not blow context.
+
+Plan-only fan-out follows `~/.cursor/skills/multi-plan/SKILL.md` by reference. Do not paste that skill here. When the human says `/multi-plan` or wants plan-only orchestration, load it and obey it.
 
 ### Review findings
 
