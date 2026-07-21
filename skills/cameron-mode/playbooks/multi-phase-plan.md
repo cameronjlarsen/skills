@@ -1,6 +1,6 @@
-### Multi-phase overlay (after poteto Multi-phase plan)
+### Multi-phase or multi-PR plan
 
-Run poteto `playbooks/multi-phase-plan.md` (and its referenced plan doc) first. Then apply:
+Follow [../references/plan.md](../references/plan.md), then apply these Cameron additions:
 
 1. Name WI stack order when branches are `WI{number}` (which WI sits on which base). Prefer the human's stack intent.
 2. One PR with work-unit commits is fine when they want a single story. Stacked ADO PRs when they ask for stack / rebase onto another WI.

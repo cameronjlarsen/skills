@@ -1,0 +1,25 @@
+{
+	"name": "cameron-mode",
+	"displayName": "cameron-mode",
+	"version": "0.1.0",
+	"description": "Cameron's agent style: concise verified work, planner-worker orchestration, ADO/WI shipping, and tighter approval gates. Requires the pstack plugin for principle-* and workflow leaf skills.",
+	"author": {
+		"name": "Cameron Larsen"
+	},
+	"keywords": [
+		"cameron-mode",
+		"workflow",
+		"ado",
+		"agent-style",
+		"subagents"
+	],
+	"category": "developer-tools",
+	"tags": [
+		"workflow",
+		"ado",
+		"review",
+		"planning"
+	],
+	"skills": "./skills/",
+	"agents": "./agents/"
+}
