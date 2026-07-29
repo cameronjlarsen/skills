@@ -13,9 +13,16 @@ Install the **pstack** plugin first. This plugin depends on pstack for `principl
 
 ## Local install
 
-1. Symlink/junction this repo under `~/.cursor/plugins/local/cameron-mode`, **or**
-2. Use Cursor’s “add from folder” UI (requires `.cursor-plugin/marketplace.json` in this repo).
+Preferred (skills under `~/.agents`, stays synced with this repo):
+
+1. Junction the skills:
+   - `~/.agents/skills/cameron-mode` → `skills/cameron-mode`
+   - `~/.agents/skills/create-ado-pr` → `skills/create-ado-pr`
+2. Junction the plugin so `cameron-agent` registers:
+   - `~/.cursor/plugins/local/cameron-mode` → this repo root
 3. Reload Window (`Developer: Reload Window`).
+
+Alternates: Cursor “add from folder” UI, or only the plugin junction (skills then load from the plugin, not `~/.agents`).
 
 ## What ships
 

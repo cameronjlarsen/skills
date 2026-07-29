@@ -10,7 +10,8 @@ Be scientific. Every shipped line traces to runtime evidence. Belt-and-suspender
 4. Verify on the same surface; the original repro now passes. Legacy-aware: if there is no cheap automated test path, live/manual repro on the real surface is enough to prove fixed. Do not block done on creating a new test harness unless asked. "Inconclusive" or wrong-surface is not a pass; flag it. Unit tests show branch behavior, not bug absence.
 5. On a WI branch, only fix branch-caused issues by default. Pre-existing bugs: report and leave unless the human expands scope.
 6. If the human asked to stay in the loop (review/babysit context), propose the fix before coding (**Review findings**).
-7. Stage the commits so the failing repro lands before the fix in git history; the diff tells the story. When a cheap local test path exists, stage the failing test first; skip when the test would be expensive, integration-heavy, or unclear. This is the canonical **sequence-verifiable-units** principle skill, the failing test first and the fix on top.
+7. Stage the commits so the failing repro lands before the fix in git history; the diff tells the story. See the **tdd** skill for the failing-test-first cadence when the bug has a cheap local test path; skip it when the test would be expensive, integration-heavy, or unclear. This is the canonical **sequence-verifiable-units** principle skill, the failing test first and the fix on top.
+
 8. Run **Opening an ADO PR** (`playbooks/opening-ado-pr.md`).
 
 Investigation fans out `how` + `why` as parallel subagents.
