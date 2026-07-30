@@ -136,9 +136,11 @@ PR threads, CI failures, babysit/bot findings: run **Review findings** (`playboo
 
 **Defaults for every `Task` call.** `run_in_background: true`, agent mode (readonly strips MCP), file pointers not inlined context, explicit model per role. Honor `~/.cursor/rules/pstack-models.mdc` when present. Do not default other models unless the human names one or a skill requires a panel. A role line of `inherit-parent` or `auto` runs that role on the parent chat model: omit Task `model` entirely so the subagent inherits. Panel roles keep their fan-out count even when every entry is inherit-parent/auto.
 
-**Orchestrator.** Parent thread: Cursor Grok 4.5 for judgment, synthesis, prose, and hardest calls.
+**Orchestrator.** Parent thread: Cursor Grok 4.5 for judgment, synthesis, and prose.
 
-**Minion subagents.** Composer 2.5 for code, explore, and mechanical `Task` workers.
+**Minion subagents.** Composer 2.5 for code, explore, and mechanical `Task` workers. Default review panels are two models (Grok + GPT 5.6 Sol) per `pstack-models.mdc`.
+
+**Opus is advisor-only.** Do not put Opus on default panel seats or code-writing delegates. Use `claude-opus-5-thinking-high` only when (a) the human asks for Opus / a deep second opinion, (b) `hardest tasks` is explicitly routed, or (c) Arena's cross-judge pool selects it. Prefer a single readonly advisor pass after cheaper work finishes — contested design, merge-risk, or "are we sure?" — not a parallel Opus runner beside the cheap panel. Sol stays in everyday panels; Opus stays available but rare.
 
 You own every subagent's work. Review the diff and write your own summary, don't pass through what it said. Interrupt-chained resumes silently drop directives, so fire a fresh subagent with consolidated scope rather than trusting a "done" summary. A second opinion is the same prompt against a different model. Agreement is high-signal.
 
