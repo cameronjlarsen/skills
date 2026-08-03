@@ -4,14 +4,24 @@ description: >-
   Cameron's agent style: concise verified work, planner-worker orchestration,
   Composer minions for nontrivial edits, ADO/WI shipping, tighter approval
   gates, propose-before-code on findings, and legacy surfaces without
-  automated tests. Use for Cameron, /cameron-mode, or requests to work in
-  Cameron's style.
+  automated tests. Requires the pstack plugin (poteto-mode playbooks for
+  identical flows, plus principle-* and workflow skills). Use for Cameron,
+  /cameron-mode, or requests to work in Cameron's style.
 disable-model-invocation: true
 mode: true
 reminder: New task? Playbook match or rigor needed -> apply /cameron-mode. Casual turn or user opts out -> don't.
 ---
 
 # Cameron mode
+
+## Base
+
+Requires the installed **pstack** plugin (`poteto-mode`, `principle-*`, workflow skills). If poteto-mode is missing, stop and say to install pstack; do not invent playbook steps.
+
+1. Keep using this skill's Principles index and cameron Non-negotiables / Autonomy / Shipping sections below.
+2. For playbooks marked **poteto** in the Playbooks list: open that file from the installed **poteto-mode** skill (`playbooks/<name>.md` under poteto-mode). Do not look for a local cameron copy.
+3. For playbooks marked **cameron** (or unmarked paths under this skill): open `skills/cameron-mode/playbooks/<name>.md`.
+4. On conflict between poteto Non-negotiables / Autonomy and cameron sections in this skill, **cameron wins**.
 
 ## Non-negotiables
 
@@ -20,7 +30,7 @@ reminder: New task? Playbook match or rigor needed -> apply /cameron-mode. Casua
 Remaining triggers:
 
 - Nontrivial change, architecture decision, or "are we sure?" → the **how** skill.
-- About to `AskQuestion` on a "which approach", "how should I", or "what should this do" fork → classify it before you ask. If the answer is a fact you could observe by running something (behavior, timing, layout, output, perf, even whether an eval separates), it is not the human's to answer. Sketch it via the Prototype playbook (`playbooks/prototype.md`) and let the result decide. If the task is a read-only Investigation whose deliverable is a cited answer, stay in it and answer from the evidence rather than building a sketch. Reserve the question for a genuine product or preference call no experiment can settle. When you must ask, ask **one question at a time** with concrete options; do not batch a questionnaire.
+- About to `AskQuestion` on a "which approach", "how should I", or "what should this do" fork → classify it before you ask. If the answer is a fact you could observe by running something (behavior, timing, layout, output, perf, even whether an eval separates), it is not the human's to answer. Sketch it via the Prototype playbook (poteto-mode `playbooks/prototype.md`) and let the result decide. If the task is a read-only Investigation whose deliverable is a cited answer, stay in it and answer from the evidence rather than building a sketch. Reserve the question for a genuine product or preference call no experiment can settle. When you must ask, ask **one question at a time** with concrete options; do not batch a questionnaire.
 - Any code → name the data shape first, and choose its organizing structure per **principle-model-the-domain**.
 - Code crossing a function boundary → the **architect** skill, parallel design exploration before implementing.
 - Parallel fan-out → the **swarm** skill for coverage matrices, races, gauntlets, and exploration partitions. Use **arena** for design or code bakeoffs with base selection and grafting.
@@ -189,27 +199,29 @@ Comments follow the same rule as the reply. Write them clean as you go; a flat "
 
 ## Playbooks
 
-Your first todolist actions are the matched playbook's steps, copied in verbatim, before any task-specific todos and before you reason about the task. The failure mode is reading a playbook then writing a bespoke plan that drops its named steps (`architect`, the throughput checkpoint). A step you choose not to do stays in the list with a one-line `skip: <reason>`; skipping silently is not allowed. Match the task to a playbook below, open its file, and copy its steps in verbatim.
+Your first todolist actions are the matched playbook's steps, copied in verbatim, before any task-specific todos and before you reason about the task. The failure mode is reading a playbook then writing a bespoke plan that drops its named steps (`architect`, the throughput checkpoint). A step you choose not to do stays in the list with a one-line `skip: <reason>`; skipping silently is not allowed. Match the task to a playbook below, open its file from the stated source, and copy its steps in verbatim.
 
 A large or cross-cutting effort (a migration across many call sites, an ambitious multi-part change), or work the user steps away from to trust later, routes to the **figure-it-out** skill even when a narrower playbook like Feature fits. Use **figure-it-out** whenever no bundled playbook fits. It designs a bespoke, rigorous playbook for the task.
 
-- **Investigation.** Read-only question: how does X work, why was Y built this way, are we sure about Z, should we do X or Y. `playbooks/investigation.md`.
-- **Bug fix.** A reported defect to reproduce, root-cause, and fix with runtime evidence. `playbooks/bug-fix.md`.
-- **Perf issue.** A measured slowness to trace and improve against a baseline. `playbooks/perf-issue.md`.
-- **Hillclimb.** Sustained, scientific improvement of one metric against a target: loop hypotheses with before/after measurement, a decision log, and one commit per accepted win. Distinct from Perf issue, which is a one-off fix. `playbooks/hillclimb.md`.
-- **Runtime forensics.** Diagnose a runtime symptom (leak, idle-CPU spin, glitch) from live instrumentation. The deliverable is a diagnosis, not a fix. `playbooks/runtime-forensics.md`.
-- **Trace forensics.** Diagnose a captured profiling artifact (cpuprofile, trace, spindump, heap snapshot) handed to you after the fact. The deliverable is a diagnosis, not a fix. `playbooks/trace-forensics.md`.
-- **Feature.** New or changed behavior, built from a named data shape. `playbooks/feature.md`.
-- **Refactoring.** A behavior-preserving change to structure or shape (rename, extract, inline, dedupe, move). `playbooks/refactoring.md`.
-- **Prototype.** A throwaway sketch to make a design or behavioral decision cheaply, or to settle an empirical fork by observing it instead of asking the human ("prototype", "mock it up", "try this layout", "sketch it to decide"). `playbooks/prototype.md`.
-- **Visual parity.** Pixel-exact UI equivalence: matching two implementations or migrating a styling system. `playbooks/visual-parity.md`.
-- **Authoring or modifying a skill.** Writing or editing a SKILL.md. `playbooks/authoring-a-skill.md`.
-- **Eval.** Testing how a skill, structure, or prompt change affects agent behavior before promoting it. `playbooks/eval.md`.
-- **Babysit.** Driving a PR or WI stack to merge-ready: conflicts, review threads, CI. `playbooks/babysit.md`.
-- **Autonomous run.** A long task to drive to completion without stopping ("run until done", "/loop until X"). `playbooks/autonomous-run.md`.
-- **Session pickup.** Resuming or taking over a prior agent's in-flight work from a transcript, cloud-agent URL, or pushed branch. `playbooks/session-pickup.md`.
-- **Pause safely.** Suspending in-flight work cleanly so it can be resumed, on an explicit pause, going offline, a Cursor restart, or imminent context compaction. The complement to Session pickup. Full steps: `playbooks/pause-safely.md`.
-- **Multi-phase or multi-PR plan.** Work that spans phases or stacked PRs. `playbooks/multi-phase-plan.md`.
-- **Review findings.** PR threads, CI, babysit, Bugbot. Propose before code. `playbooks/review-findings.md`.
-- **Merge review.** Branch-caused risk against merge base. `playbooks/merge-review.md`.
-- **Opening an ADO PR.** Invoked at the end of every shipping playbook. `playbooks/opening-ado-pr.md`.
+**poteto** = installed pstack `poteto-mode` skill. **cameron** = this skill's `playbooks/`.
+
+- **Investigation** (poteto). Read-only question: how does X work, why was Y built this way, are we sure about Z, should we do X or Y. poteto-mode `playbooks/investigation.md`.
+- **Bug fix** (cameron). A reported defect to reproduce, root-cause, and fix with runtime evidence. `playbooks/bug-fix.md`.
+- **Perf issue** (cameron). A measured slowness to trace and improve against a baseline. `playbooks/perf-issue.md`.
+- **Hillclimb** (cameron). Sustained, scientific improvement of one metric against a target: loop hypotheses with before/after measurement, a decision log, and one commit per accepted win. Distinct from Perf issue, which is a one-off fix. `playbooks/hillclimb.md`.
+- **Runtime forensics** (poteto). Diagnose a runtime symptom (leak, idle-CPU spin, glitch) from live instrumentation. The deliverable is a diagnosis, not a fix. poteto-mode `playbooks/runtime-forensics.md`.
+- **Trace forensics** (poteto). Diagnose a captured profiling artifact (cpuprofile, trace, spindump, heap snapshot) handed to you after the fact. The deliverable is a diagnosis, not a fix. poteto-mode `playbooks/trace-forensics.md`.
+- **Feature** (cameron). New or changed behavior, built from a named data shape. `playbooks/feature.md`.
+- **Refactoring** (cameron). A behavior-preserving change to structure or shape (rename, extract, inline, dedupe, move). `playbooks/refactoring.md`.
+- **Prototype** (poteto). A throwaway sketch to make a design or behavioral decision cheaply, or to settle an empirical fork by observing it instead of asking the human ("prototype", "mock it up", "try this layout", "sketch it to decide"). poteto-mode `playbooks/prototype.md`.
+- **Visual parity** (cameron). Pixel-exact UI equivalence: matching two implementations or migrating a styling system. `playbooks/visual-parity.md`.
+- **Authoring or modifying a skill** (cameron). Writing or editing a SKILL.md. `playbooks/authoring-a-skill.md`.
+- **Eval** (cameron). Testing how a skill, structure, or prompt change affects agent behavior before promoting it. `playbooks/eval.md`.
+- **Babysit** (cameron). Driving a PR or WI stack to merge-ready: conflicts, review threads, CI. `playbooks/babysit.md`.
+- **Autonomous run** (cameron). A long task to drive to completion without stopping ("run until done", "/loop until X"). `playbooks/autonomous-run.md`.
+- **Session pickup** (poteto). Resuming or taking over a prior agent's in-flight work from a transcript, cloud-agent URL, or pushed branch. poteto-mode `playbooks/session-pickup.md`.
+- **Pause safely** (poteto). Suspending in-flight work cleanly so it can be resumed, on an explicit pause, going offline, a Cursor restart, or imminent context compaction. The complement to Session pickup. poteto-mode `playbooks/pause-safely.md`.
+- **Multi-phase or multi-PR plan** (cameron). Work that spans phases or stacked PRs. `playbooks/multi-phase-plan.md`.
+- **Review findings** (cameron). PR threads, CI, babysit, Bugbot. Propose before code. `playbooks/review-findings.md`.
+- **Merge review** (cameron). Branch-caused risk against merge base. `playbooks/merge-review.md`.
+- **Opening an ADO PR** (cameron). Invoked at the end of every shipping playbook. `playbooks/opening-ado-pr.md`.

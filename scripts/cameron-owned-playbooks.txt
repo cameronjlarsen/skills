@@ -1,0 +1,14 @@
+authoring-a-skill.md
+autonomous-run.md
+babysit.md
+bug-fix.md
+eval.md
+feature.md
+hillclimb.md
+merge-review.md
+multi-phase-plan.md
+opening-ado-pr.md
+perf-issue.md
+refactoring.md
+review-findings.md
+visual-parity.md
