@@ -7,9 +7,9 @@ Invoked at the end of every shipping playbook when a PR is needed.
 **Cameron notes**
 
 - **Worktree.** Prefer a worktree off the right base; fresh worktree when the checkout is dirty with unrelated work.
-- **Commits.** Small, ordered, landable commits. Prefer `work-unit-commits` when reshaping. `/deslop` before commit when available. **humanizer** + **unslop** on PR body and commit messages meant for humans.
-- **Babysit.** After create, run babysit only if the human wants the PR watched.
-- **Findings.** Skeptical bot posture applies after the propose-before-code gate on new findings.
+- **Commits.** Small, ordered, landable commits. Prefer `work-unit-commits` when reshaping. `/deslop` before commit when available. Before review, `/no-comments` when the pstack plugin is installed. **humanizer** + **technical-writing** + **unslop** on PR body and commit messages meant for humans.
+- **Babysit.** After create, run **Babysit** (`playbooks/babysit.md`) only if the human wants the PR watched.
+- **Findings.** Skeptical bot posture applies after the propose-before-code gate on new findings (`playbooks/review-findings.md`).
 
 1. Run **create-ado-pr** Steps 1–4 (resolve WI, fetch fields, duplicate check, change summary).
 2. Draft the PR proposal via create-ado-pr Step 5. **Do not push. Do not create the PR.** Stop for its PR approval gate.

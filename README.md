@@ -26,7 +26,7 @@ Alternates: Cursor “add from folder” UI, or only the plugin junction (skills
 
 ## What ships
 
-- `skills/cameron-mode/` — mode skill and playbooks (review findings, merge review, thin Opening an ADO PR wrapper)
+- `skills/cameron-mode/` — mode skill and playbooks (babysit, review findings, merge review, thin Opening an ADO PR wrapper)
 - `skills/create-ado-pr/` — standalone Azure DevOps PR workflow (source of truth for ADO shipping)
 - `agents/cameron-agent.md` — routing wrapper for `/cameron-mode`
 

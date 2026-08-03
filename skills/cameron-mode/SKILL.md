@@ -23,11 +23,15 @@ Remaining triggers:
 - About to `AskQuestion` on a "which approach", "how should I", or "what should this do" fork → classify it before you ask. If the answer is a fact you could observe by running something (behavior, timing, layout, output, perf, even whether an eval separates), it is not the human's to answer. Sketch it via the Prototype playbook (`playbooks/prototype.md`) and let the result decide. If the task is a read-only Investigation whose deliverable is a cited answer, stay in it and answer from the evidence rather than building a sketch. Reserve the question for a genuine product or preference call no experiment can settle. When you must ask, ask **one question at a time** with concrete options; do not batch a questionnaire.
 - Any code → name the data shape first, and choose its organizing structure per **principle-model-the-domain**.
 - Code crossing a function boundary → the **architect** skill, parallel design exploration before implementing.
+- Parallel fan-out → the **swarm** skill for coverage matrices, races, gauntlets, and exploration partitions. Use **arena** for design or code bakeoffs with base selection and grafting.
 - Contested design → the **interrogate** skill (multi-model adversarial) before shipping.
 - Nontrivial multi-step → write the throughput checkpoint (Feature step 3).
 - Any prose surface → the **unslop** skill. Your reply is a prose surface; write it per **Writing the reply**. Agent-facing prose also follows the **create-skill** skill (Cursor's built-in for authoring SKILL.md files).
+- Docs, RFCs, readmes, PR descriptions, or commit messages → the **technical-writing** skill (`/technical-writing`).
 - Before commit → the `deslop` skill from the `cursor-team-kit` plugin (`/deslop`).
+- Before review → the **no-comments** skill (`/no-comments`).
 - Shipping UI / IDE / CLI → the matching control skill. `cursor-team-kit` publishes `control-cli` (CLIs and TUIs) and `control-ui` (browser / Electron / web UIs). For bug fixes, reproduce first on the same surface yourself; hand to the user only under the narrow Bug fix step 1 exception.
+- Any PR-status request → the **Babysit** playbook (`playbooks/babysit.md`), and not Cursor's built-in babysit skill, whose description matches the same words. That includes "babysit this", "get it green", "address the bugbot comments", and the commonest phrasing, "check on PR X" / "anything outstanding on X". Never triggered by merely opening a PR. Declare its mode before polling; the playbook's step 1 owns the request-to-mode mapping. Reaching for `drive` inside a phase agent stops that agent finishing its turn.
 - Bugbot or the agentic security review commented → skeptical posture. They catch real bugs and also file non-issues and nitpicks, so assess each on its merits and dismiss noise with a concrete reason instead of churning code. On review findings, run **Review findings** (`playbooks/review-findings.md`) and propose before coding.
 - Broken skill mid-task → fix it in its own PR. Don't block. Don't silently work around it.
 - Long, autonomous, or multi-phase work, or any task the user steps away from to review later ("going to bed", "trust it when i'm back", "/loop until X") → a decision trail via the **show-me-your-work** skill. Commit it when stakes need an auditable record; keep it local otherwise.
@@ -118,7 +122,7 @@ Plan-only fan-out follows `~/.cursor/skills/multi-plan/SKILL.md` by reference. W
 
 ## Review findings
 
-PR threads, CI failures, babysit/bot findings: run **Review findings** (`playbooks/review-findings.md`). Propose resolutions first. Wait for go-ahead before changing code. Skeptical babysit posture still applies after that gate.
+PR threads, CI failures, babysit/bot findings: run **Review findings** (`playbooks/review-findings.md`). Propose resolutions first. Wait for go-ahead before changing code. Skeptical babysit posture still applies after that gate. An ongoing PR-status watch ("get it green", "check on PR X") is **Babysit** (`playbooks/babysit.md`); Review findings is the propose-before-code gate inside it.
 
 ## Verification (legacy-aware)
 
@@ -130,7 +134,7 @@ PR threads, CI failures, babysit/bot findings: run **Review findings** (`playboo
 
 ## Subagents
 
-**Use `subagent_type: "cameron-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). `/cameron-mode` and `cameron-agent` route through the same wrapper. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`) set their own `subagent_type` for diverse-model review; respect what the skill prescribes, don't override to `cameron-agent`.
+**Use `subagent_type: "cameron-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). `/cameron-mode` and `cameron-agent` route through the same wrapper. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review; respect what the skill prescribes, don't override to `cameron-agent`.
 
 **Do not use `poteto-agent` unless the human asks for poteto routing.**
 
@@ -175,7 +179,7 @@ Write the reply clean as you draft it. The cleanup-afterward pass has been measu
 - **Frame impact for the consumer and the maintainer.** Name who the work is for (an end user, a colleague importing the library) and what changes for them before any implementation detail. Then what the next engineer who owns this code inherits. If you can't say what either would notice, the work or the explanation is off.
 - **Never fabricate a link, citation, or transcript reference.** Link only artifacts you produced or read this session.
 
-For user-facing artifacts (PR bodies, ticket comments, docs meant for humans), also run **humanizer**.
+For user-facing artifacts (PR bodies, ticket comments, docs meant for humans), also run **technical-writing** and **humanizer**.
 
 Every playbook ends with a reply written this way. ADO PR link when applicable. The per-playbook lines below name only the content unique to that playbook.
 
@@ -201,6 +205,7 @@ A large or cross-cutting effort (a migration across many call sites, an ambitiou
 - **Visual parity.** Pixel-exact UI equivalence: matching two implementations or migrating a styling system. `playbooks/visual-parity.md`.
 - **Authoring or modifying a skill.** Writing or editing a SKILL.md. `playbooks/authoring-a-skill.md`.
 - **Eval.** Testing how a skill, structure, or prompt change affects agent behavior before promoting it. `playbooks/eval.md`.
+- **Babysit.** Driving a PR or WI stack to merge-ready: conflicts, review threads, CI. `playbooks/babysit.md`.
 - **Autonomous run.** A long task to drive to completion without stopping ("run until done", "/loop until X"). `playbooks/autonomous-run.md`.
 - **Session pickup.** Resuming or taking over a prior agent's in-flight work from a transcript, cloud-agent URL, or pushed branch. `playbooks/session-pickup.md`.
 - **Pause safely.** Suspending in-flight work cleanly so it can be resumed, on an explicit pause, going offline, a Cursor restart, or imminent context compaction. The complement to Session pickup. Full steps: `playbooks/pause-safely.md`.

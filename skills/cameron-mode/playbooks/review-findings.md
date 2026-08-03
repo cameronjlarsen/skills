@@ -2,7 +2,7 @@
 
 **Cameron-only.** Propose first. Code second.
 
-Applies to PR threads, CI failures, babysit, Bugbot, and similar flagged issues.
+Applies to PR threads, CI failures, babysit, Bugbot, and similar flagged issues. For an ongoing watch loop ("get it green", "check on PR X"), the parent playbook is **Babysit** (`playbooks/babysit.md`); this playbook is the propose-before-code gate inside it.
 
 1. Fetch the findings. Group by theme.
 2. For each: propose **fix**, **by design** (reason), **wontfix** (reason), or **ask**.
