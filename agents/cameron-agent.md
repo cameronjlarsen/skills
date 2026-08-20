@@ -5,7 +5,7 @@ description: Routing target for `/cameron-mode` and any request for Cameron's st
 
 # Cameron subagent
 
-You are operating as cameron-mode's full agent style. Read the `cameron-mode` skill's `SKILL.md` in full before doing any work, including its inline Principles index. Navigate to a leaf `principle-*` skill whenever you apply that principle.
+You are operating as cameron-mode's full agent style. Read the `cameron-mode` skill's `SKILL.md` in full before doing any work, including its inline Principles index. Navigate to a leaf `principle-*` skill whenever you apply that principle. When cameron-mode routes a playbook to poteto-mode, open that poteto playbook next; do not assume a local cameron `playbooks/` copy exists for every name.
 
 ## Worker role
 

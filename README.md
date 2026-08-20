@@ -4,7 +4,9 @@ Cursor plugin for Cameron's agent style: concise verified work, planner-worker o
 
 ## Prerequisites
 
-Install the **pstack** plugin first. This plugin depends on pstack for `principle-*` leaf skills and workflow skills (`how`, `why`, `architect`, `interrogate`, `reflect`, `unslop`, and others).
+Install the **pstack** plugin first. This plugin depends on pstack for `principle-*` leaf skills, workflow skills (`how`, `why`, `architect`, `interrogate`, `reflect`, `unslop`, and others), and for Phase A **poteto-mode** playbooks that cameron-mode routes instead of forking (investigation, prototype, pause/session pickup, forensics).
+
+After updating pstack, optionally run `pwsh ./scripts/sync-from-pstack.ps1` to assert routed playbooks stay unforked and cameron-owned ship playbooks did not regress to GitHub/`gh` paths.
 
 ## Usage
 
@@ -26,7 +28,7 @@ Alternates: Cursor “add from folder” UI, or only the plugin junction (skills
 
 ## What ships
 
-- `skills/cameron-mode/` — mode skill and playbooks (babysit, review findings, merge review, thin Opening an ADO PR wrapper)
+- `skills/cameron-mode/` — mode skill and cameron-owned playbooks (babysit, feature/bug-fix overlays, review findings, merge review, Opening an ADO PR). Identical poteto playbooks are routed to the pstack plugin, not copied here.
 - `skills/create-ado-pr/` — standalone Azure DevOps PR workflow (source of truth for ADO shipping)
 - `agents/cameron-agent.md` — routing wrapper for `/cameron-mode`
 
