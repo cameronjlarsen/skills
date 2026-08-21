@@ -30,6 +30,7 @@ Alternates: Cursor “add from folder” UI, or only the plugin junction (skills
 
 - `skills/cameron-mode/` — mode skill and cameron-owned playbooks (babysit, feature/bug-fix overlays, review findings, merge review, Opening an ADO PR). Identical poteto playbooks are routed to the pstack plugin, not copied here.
 - `skills/create-ado-pr/` — standalone Azure DevOps PR workflow (source of truth for ADO shipping)
+- `skills/work-unit-commits/` — commit-shaping skill for reviewable work units and stacked PRs
 - `agents/cameron-agent.md` — routing wrapper for `/cameron-mode`
 
-Companion skills referenced by name (`humanizer`, `work-unit-commits`, `cursor-team-kit` `/deslop`) are external. Install them separately when you want those steps.
+Companion skills referenced by name (`humanizer`, `cursor-team-kit` `/deslop`) are external. Install them separately when you want those steps.
